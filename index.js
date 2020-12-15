@@ -1,10 +1,12 @@
 const superagent = require('superagent');
-const proxy = require('./superagent-agent');
+const proxyAgent = require('proxy-agent');
 
+const url = 'http://baidu.com';
+const myAgent = proxyAgent(url);
 const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36';
-const agent = superagent.agent()
-  .use(proxy('http://baidu.com'));
-// promise with then/catch
+const agent = superagent.agent(myAgent);
+
+console.log('agent', agent);
 agent
   .get('https://api.uomg.com/api/rand.music')
   .query({ sort: '热歌榜', format: 'json' })
